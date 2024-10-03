@@ -42,6 +42,12 @@ values."
      common-lisp
      emacs-lisp
      git
+     (treemacs :variables
+               treemacs-use-follow-mode 'tag
+               treemacs-use-filewatch-mode t
+               treemacs-use-git-mode 'deferred
+               treemacs-lock-width t
+               treemacs-use-all-the-icons-theme t)
      ;; markdown
      ;; org
      ;; (shell :variables
@@ -311,7 +317,21 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (setq inferior-lisp-program "/usr/local/bin/sbcl")
+  (add-hook 'slime-repl-mode-hook
+            (lambda ()
+              (define-key slime-repl-mode-map (kbd "C-k") 'slime-repl-backward-input)
+              (define-key slime-repl-mode-map (kbd "C-j") 'slime-repl-forward-input)))
+
   (spacemacs/toggle-evil-safe-lisp-structural-editing-on-register-hook-common-lisp-mode)
+                                        ;  (evil-leader/set-key-for-mode 'lisp-mode "dc" 'slime-connect)
+  (spacemacs/set-leader-keys-for-major-mode 'lisp-mode "sc" 'slime-connect)
+                                        ;  (spacemacs/set-leader-keys)
+                                        ;   (define-key lisp-mode-map (kbd "<SPC>-m-s-c") 'slime-connect)
+                                        ;   (with-eval-after-load 'lisp
+                                        ;     (message "eval-after-load")
+                                        ;    #'(define-key lisp-map (kbd "M-s-c") 'slime-connect)
+                                        ;     )
+  (setq mouse-yank-at-point t)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -344,7 +364,7 @@ This function is called at the very end of Spacemacs initialization."
  '(ansi-color-names-vector
    ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
  '(package-selected-packages
-   '(ac-ispell auto-complete auto-yasnippet common-lisp-snippets fuzzy helm-c-yasnippet helm-company yasnippet-snippets yasnippet slime-company company slime smeargle orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download magit-gitflow magit-popup htmlize helm-gitignore gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit transient git-commit with-editor ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
+   '(treemacs-all-the-icons slime-company company slime smeargle orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download magit-gitflow magit-popup htmlize helm-gitignore gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit transient git-commit with-editor ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
